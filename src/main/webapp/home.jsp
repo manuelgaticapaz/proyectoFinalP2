@@ -1,0 +1,28 @@
+<%-- 
+    Document   : home
+    Created on : 1/09/2024, 7:55:13 p. m.
+    Author     : Manuel Gatica Paz
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Home</title>
+        <link  rel="stylesheet" href="style.css">
+    </head>
+    <header>
+	<nav class="navigation">
+		<a href="#">Mi Vivienda</a>
+		<a href="#">Reservar</a>
+                <a href="#">Estado de Cuenta (<%= request.getAttribute("txtEmail")%>)</a>
+		<a href="index.jsp">Salir</a>
+        </nav>	
+    </header>
+    <body>
+        <h2></h2>
+    </body>
+</html>
+
