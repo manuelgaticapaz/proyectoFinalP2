@@ -24,4 +24,7 @@ public class conexionDB {
         cn = DriverManager.getConnection(urlmysql, usuario,contrasena);
         return cn;
     }
+    public Connection getConnection(){
+        return cn;
+    }
 }
