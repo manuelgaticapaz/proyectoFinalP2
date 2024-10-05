@@ -92,3 +92,65 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #218838;
 }
+
+.container {
+    
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #28a745; /* Color de fondo para el encabezado */
+    color: white; /* Color del texto en el encabezado */
+}
+
+.table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Color de fondo para filas pares */
+}
+
+.table tr:hover {
+    background-color: #e2e2e2; /* Color de fondo al pasar el ratón sobre una fila */
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.btn-success {
+    background-color: #28a745; /* Color para el botón "Agregar Nuevo" */
+}
+
+.btn-warning {
+    background-color: #ffc107; /* Color para el botón "Editar" */
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Color para el botón "Remove" */
+}
+
+.btn:hover {
+    opacity: 0.8; /* Efecto de hover en los botones */
+}
+

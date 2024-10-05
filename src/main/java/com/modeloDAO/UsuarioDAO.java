@@ -26,23 +26,43 @@ public class UsuarioDAO implements CRUD{
     Usuario usr=new Usuario();
     
     @Override
-    public List listar() {
-        ArrayList<Usuario> list=new ArrayList<>();
-        String sql="select * from usr_ususarios";
+    public List<Usuario> listar() {
+        ArrayList<Usuario> list = new ArrayList<>();
+        String sql = "SELECT * FROM `usr_ususarios`";
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
         try {
-            con=cn.getConnection();
-            ps=con.prepareStatement(sql);
-            rs=ps.executeQuery();
-            while(rs.next()){
-                Usuario user=new Usuario();
+            con = cn.getConexionMysql();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            if (!rs.next()) {
+                System.out.println("No hay datos en la tabla.");
+                return list;
+            }
+
+            do {
+                Usuario user = new Usuario();
                 user.setId(rs.getInt("usr_id"));
                 user.setMail(rs.getString("usr_email"));
                 user.setContrasenia(rs.getString("usr_contraseña"));
-                user.setEsAdmin(rs.getBoolean("usr_contraseña"));
-                user.setEsActivo(rs.getBoolean("usr_es_admin"));
+                user.setEsAdmin(rs.getBoolean("usr_es_admin"));
+                user.setEsActivo(rs.getBoolean("usr_activo"));
                 list.add(user);
+            } while (rs.next());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
         }
         return list;
     }

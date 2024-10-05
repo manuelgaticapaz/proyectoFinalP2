@@ -18,7 +18,7 @@
     </head>
     <body>
         <div class="container">
-            <h1>Personas</h1>
+            <h2>Usuarios</h2>
             <a class="btn btn-success" href="Controlador?accion=add">Agregar Nuevo</a>
             <br>
             <br>
@@ -30,6 +30,8 @@
                         <th class="text-center">PASS</th>
                         <th class="text-center">ADMINISTRADOR</th>
                         <th class="text-center">ACTIVO</th>
+                        <th class="text-center">Editar</th>
+                        <th class="text-center">Eliminar</th>
                     </tr>
                 </thead>
                 <%
@@ -51,8 +53,10 @@
                         <td class="text-center"><%= usr.getEsActivo()%></td>
                         <td class="text-center">
                             <a class="btn btn-warning" href="Controlador?accion=editar&id=<%= usr.getId()%>">Editar</a>
-                            <a class="btn btn-danger" href="Controlador?accion=eliminar&id=<%= usr.getId()%>">Remove</a>
                         </td>
+                         <td class="text-center">
+                            <a class="btn btn-danger" href="Controlador?accion=eliminar&id=<%= usr.getId()%>">Eliminar</a>
+                        </td>                       
                     </tr>
                     <%}%>
                 </tbody>

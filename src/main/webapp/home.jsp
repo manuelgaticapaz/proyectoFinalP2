@@ -18,7 +18,7 @@
                     if (request.getAttribute("txtAdmin") == "Administrador"){
                     %>
         <nav class = "navigation">
-                <a class="btn btn-success btn-lg" href="controlador?accion=listar">Usuarios</a>
+                <a href="controlador?accion=listar">Usuarios</a>
                 <a href="#">Viviendas</a>
                 <a href="#">Amenidades</a>
         </nav>
