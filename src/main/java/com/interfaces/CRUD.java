@@ -11,10 +11,10 @@ import java.util.List;
  *
  * @author Kenzy
  */
-public class CRUD {
-    /*public List listar();
+public interface CRUD {
+    public List listar();
     public Usuario list(int id);
     public boolean add(Usuario per);
     public boolean edit(Usuario per);
-    public boolean eliminar(int id)*/
+    public boolean eliminar(int id);
 }

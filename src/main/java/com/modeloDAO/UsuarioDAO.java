@@ -5,6 +5,7 @@
 package com.modeloDAO;
 
 import com.conexion.conexionDB;
+import com.interfaces.CRUD;
 import com.modelo.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,14 +18,14 @@ import java.util.List;
  *
  * @author Kenzy
  */
-public class UsuarioDAO {
+public class UsuarioDAO implements CRUD{
     conexionDB cn=new conexionDB();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
     Usuario usr=new Usuario();
     
-    /*@Override
+    @Override
     public List listar() {
         ArrayList<Usuario> list=new ArrayList<>();
         String sql="select * from usr_ususarios";
@@ -107,6 +108,6 @@ public class UsuarioDAO {
         } catch (Exception e) {
         }
         return false;
-    }*/
+    }
     
 }
