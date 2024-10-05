@@ -68,53 +68,66 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         System.out.println("doPost method called");
-        
+
         try {
-        // Procesa la solicitud
-        processRequest(request, response);
-        conexionDB conexion = new conexionDB();
-        Connection con = null;
-        
-        boolean existeUsuario = false;
-        
-        // Recupera datos del formulario
-        String email = request.getParameter("txtEmail");
-        String password = request.getParameter("txtPassword");
-        
-        // Usando MySQL
-        con = conexion.getConexionMysql();
-        if (con == null) {
-            throw new SQLException("No se pudo obtener la conexión a la base de datos.");
-        }
-        
-        String consulta = "SELECT * FROM usr_ususarios WHERE usr_email = ? AND usr_contraseña = ?";
-        
-        PreparedStatement pst = con.prepareStatement(consulta);
-        pst.setString(1, email);
-        pst.setString(2, password);
-        
-        ResultSet rs = pst.executeQuery();
-        
-        while (rs.next()) {
-            existeUsuario = true;
-        }
-        
-        if (existeUsuario) {
-            request.setAttribute("txtEmail", email);
-            request.getRequestDispatcher("/home.jsp").forward(request, response);
-        } else {
-            request.getRequestDispatcher("/error.jsp").forward(request, response);
-        }
-        
+            // Procesa la solicitud
+            processRequest(request, response);
+            conexionDB conexion = new conexionDB();
+            Connection con = null;
+
+            boolean existeUsuario = false;
+            boolean esAdmin = false;
+            String admin = "";
+
+            // Recupera datos del formulario
+            String email = request.getParameter("txtEmail");
+            String password = request.getParameter("txtPassword");
+
+            // Usando MySQL
+            con = conexion.getConexionMysql();
+            if (con == null) {
+                throw new SQLException("No se pudo obtener la conexión a la base de datos.");
+            }
+
+            // Cambié la consulta para usar 'usr_activo = 1'
+            String consulta = "SELECT * FROM usr_ususarios WHERE usr_email = ? AND usr_contraseña = ? AND usr_activo = 1";
+
+            PreparedStatement pst = con.prepareStatement(consulta);
+            pst.setString(1, email);
+            pst.setString(2, password);
+
+            ResultSet rs = pst.executeQuery();
+
+            // Solo entra al bucle si existen resultados
+            while (rs.next()) {
+                existeUsuario = true;
+                // Asumiendo que el campo usr_es_admin es de tipo boolean o tinyint
+                esAdmin = rs.getBoolean("usr_es_admin");
+
+                // Si es admin, asignamos "Administrador" al atributo admin
+                if (esAdmin) {
+                    admin = "Administrador";
+                }
+            }
+
+            // Procesamos el resultado
+            if (existeUsuario) {
+                request.setAttribute("txtEmail", email);
+                request.setAttribute("txtAdmin", admin); // asignamos admin como String (o vacío si no es admin)
+                request.getRequestDispatcher("/home.jsp").forward(request, response);
+            } else {
+                request.getRequestDispatcher("/error.jsp").forward(request, response);
+            }
+
         } catch (SQLException Ex) {
             logger.log(Level.SEVERE, "Ocurrió una excepción en SQL:", Ex);
             // Opcional: Puedes redirigir a una página de error o mostrar un mensaje
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
-        
     }
+
 
     /**
      * Returns a short description of the servlet.

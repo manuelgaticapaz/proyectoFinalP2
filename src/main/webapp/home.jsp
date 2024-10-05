@@ -11,11 +11,23 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home</title>
-        <link  rel="stylesheet" href="style.css">
+        <link  rel="stylesheet" href="./css/style.css">
     </head>
     <header>
+                        <%
+                    if (request.getAttribute("txtAdmin") == "Administrador"){
+                    %>
+        <nav class = "navigation">
+                <a href="#">Usuarios</a>
+                <a href="#">Viviendas</a>
+                <a href="#">Amenidades</a>
+                <br>
+        </nav>
+                    <%
+                    }
+                %>
 	<nav class="navigation">
-		<a href="#">Mi Vivienda</a>
+                <a href="#">Mi Vivienda</a>
 		<a href="#">Reservar</a>
                 <a href="#">Estado de Cuenta (<%= request.getAttribute("txtEmail")%>)</a>
 		<a href="index.jsp">Salir</a>
