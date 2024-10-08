@@ -16,6 +16,7 @@
         <form  action = "index.jsp" method= "Post">
         <label>Usuario restringido o no disponible.</label>
         <label>Favor de comunicarse con el administrador del sistema.</label>
+        <br>
         <input type="submit" name="btnClear" value="Regresar">
         </form>
         

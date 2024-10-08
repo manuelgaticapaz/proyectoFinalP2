@@ -16,10 +16,11 @@
         <title>Usuarios</title>
         <link  rel="stylesheet" href="./css/style.css">
     </head>
+    <%@ include file="/vistas/header.jsp" %>
     <body>
         <div class="container">
             <h2>Usuarios</h2>
-            <a class="btn btn-success" href="Controlador?accion=add">Agregar Nuevo</a>
+            <a class="btn btn-success" href="controlador?accion=add">Agregar Nuevo</a>
             <br>
             <br>
             <table class="table table-bordered">
@@ -52,10 +53,10 @@
                         <td class="text-center"><%= usr.getEsAdmin()%></td>
                         <td class="text-center"><%= usr.getEsActivo()%></td>
                         <td class="text-center">
-                            <a class="btn btn-warning" href="Controlador?accion=editar&id=<%= usr.getId()%>">Editar</a>
+                            <a class="btn btn-warning" href="controlador?accion=editar&id=<%= usr.getId()%>">Editar</a>
                         </td>
                          <td class="text-center">
-                            <a class="btn btn-danger" href="Controlador?accion=eliminar&id=<%= usr.getId()%>">Eliminar</a>
+                            <a class="btn btn-danger" href="controlador?accion=eliminar&id=<%= usr.getId()%>">Eliminar</a>
                         </td>                       
                     </tr>
                     <%}%>

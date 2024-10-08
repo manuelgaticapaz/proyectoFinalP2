@@ -13,25 +13,7 @@
         <title>Home</title>
         <link  rel="stylesheet" href="./css/style.css">
     </head>
-    <header>
-                        <%
-                    if (request.getAttribute("txtAdmin") == "Administrador"){
-                    %>
-        <nav class = "navigation">
-                <a href="controlador?accion=listar">Usuarios</a>
-                <a href="#">Viviendas</a>
-                <a href="#">Amenidades</a>
-        </nav>
-                    <%
-                    }
-                %>
-	<nav class="navigation">
-                <a href="#">Mi Vivienda</a>
-		<a href="#">Reservar</a>
-                <a href="#">Estado de Cuenta (<%= request.getAttribute("txtEmail")%>)</a>
-		<a href="index.jsp">Salir</a>
-        </nav>	
-    </header>
+    <%@ include file="/vistas/header.jsp" %>
     <body>
         <h2></h2>
     </body>

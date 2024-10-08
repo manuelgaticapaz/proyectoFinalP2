@@ -15,13 +15,13 @@
         <link rel="stylesheet" href="./css/style.css">
     </head>
     <body>
-    <form  action = "<%=request.getContextPath()%>/LoginServlet" method= "Post">
-        <h2>Login</h2>
-        <label>Email</label>
-        <input type="email" value="" name = "txtEmail" required>
-        <label>Password</label>
-        <input type="password" value="" name ="txtPassword" required>
-        <input type="submit" name="btnLogin" value="Ingresar">
-    </form>
-</body>
+        <form class="login-form" action="<%=request.getContextPath()%>/LoginServlet" method="Post">
+            <h2>Login</h2>
+            <label>Email</label>
+            <input type="email" value="" name="txtEmail" required>
+            <label>Password</label>
+            <input type="password" value="" name="txtPassword" required>
+            <input type="submit" name="btnLogin" value="Ingresar">
+        </form>
+    </body>
 </html>

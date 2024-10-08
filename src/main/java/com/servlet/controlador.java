@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author Kenzy
  */
 public class controlador extends HttpServlet {
+    
+    
 
     String listar="vistas/listar.jsp";
     String add="vistas/add.jsp";
@@ -61,18 +63,16 @@ public class controlador extends HttpServlet {
         String action=request.getParameter("accion");
         if(action.equalsIgnoreCase("listar")){
             acceso=listar;            
-        }else if(action.equalsIgnoreCase("add")){
+        } if(action.equalsIgnoreCase("add")){
             acceso=add;
         }
         else if(action.equalsIgnoreCase("Agregar")){
             String mail=request.getParameter("txtMail");
             String contrasenia=request.getParameter("txtContrasenia");
-            String admin = request.getParameter("txtAdmin");
-            Boolean esAdmin = false;
-            Boolean esActivo = true;
-            if (admin != "Si"){
-                esAdmin = true;
-            }
+            String admin = request.getParameter("chkAdmin");
+            Boolean esAdmin = (admin != null && admin.equals("true"));
+            String activo = request.getParameter("chkActivo");
+            Boolean esActivo = (activo != null && activo.equals("true"));
             p.setMail(mail);
             p.setContrasenia(contrasenia);
             p.setEsAdmin(esAdmin);
@@ -81,33 +81,27 @@ public class controlador extends HttpServlet {
             acceso=listar;
         }
         else if(action.equalsIgnoreCase("editar")){
-            request.setAttribute("usr_id",request.getParameter("txtId"));
+            request.setAttribute("idUser",request.getParameter("id"));
             acceso=edit;
         }
         else if(action.equalsIgnoreCase("Actualizar")){
-            id=Integer.parseInt(request.getParameter("txtId"));
+            id=Integer.parseInt(request.getParameter("txtid"));
             String mail=request.getParameter("txtMail");
             String contrasenia=request.getParameter("txtContrasenia");
-            String admin = request.getParameter("txtAdmin");
-            Boolean esAdmin = false;
-            String activo = request.getParameter("txtActivo");
-            Boolean esActivo = true;
-            if (admin != ""){
-                esAdmin = true;
-            }
-            if (activo != ""){
-                esActivo = false;
-            }
+            String admin = request.getParameter("chkAdmin");
+            Boolean esAdmin = (admin != null && admin.equals("true"));
+            String activo = request.getParameter("chkActivo");
+            Boolean esActivo = (activo != null && activo.equals("true"));
             p.setId(id);
-            p.setMail(mail);
-            p.setContrasenia(contrasenia);
+//            p.setMail(mail);
+//            p.setContrasenia(contrasenia);
             p.setEsAdmin(esAdmin);
             p.setEsActivo(esActivo);
             dao.edit(p);
             acceso=listar;
         }
         else if(action.equalsIgnoreCase("eliminar")){
-            id=Integer.parseInt(request.getParameter("txtId"));
+            id=Integer.parseInt(request.getParameter("id"));
             p.setId(id);
             dao.eliminar(id);
             acceso=listar;
@@ -127,7 +121,21 @@ public class controlador extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+            String mail = request.getParameter("txtMail");
+            String admin = request.getParameter("txtAdmin"); // Esto será un string que representa un boolean
+
+            // Puedes convertirlo a booleano si es necesario
+            boolean esAdmin = Boolean.parseBoolean(admin);
+
+            
+            // Establecemos los atributos para el header
+            request.setAttribute("txtEmail", mail);
+            request.setAttribute("txtAdmin", esAdmin);
+
+            // Redirigimos a home.jsp
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/vistas/listar.jsp");
+            dispatcher.forward(request, response);
+
     }
 
     /**

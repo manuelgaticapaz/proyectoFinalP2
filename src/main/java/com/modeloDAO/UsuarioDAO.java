@@ -71,15 +71,15 @@ public class UsuarioDAO implements CRUD{
     public Usuario list(int id) {
         String sql="select * from usr_ususarios where usr_id="+id;
         try {
-            con=cn.getConnection();
+            con=cn.getConexionMysql();
             ps=con.prepareStatement(sql);
             rs=ps.executeQuery();
             while(rs.next()){                
                 usr.setId(rs.getInt("usr_id"));
                 usr.setMail(rs.getString("usr_email"));
                 usr.setContrasenia(rs.getString("usr_contraseña"));
-                usr.setEsAdmin(rs.getBoolean("usr_contraseña"));
-                usr.setEsActivo(rs.getBoolean("usr_es_admin"));
+                usr.setEsAdmin(rs.getBoolean("usr_es_admin"));
+                usr.setEsActivo(rs.getBoolean("usr_activo"));
             }
         } catch (Exception e) {
         }
@@ -91,11 +91,11 @@ public class UsuarioDAO implements CRUD{
        String sql="insert into usr_ususarios(`usr_email`, `usr_contraseña`, `usr_es_admin`, `usr_activo`) "
                + "VALUES ('"+usr.getMail()+
                "','"+usr.getContrasenia()+
-               "','"+usr.getEsAdmin()+
-               "','"+usr.getEsActivo()+
-               "')";
+               "',"+usr.getEsAdmin()+
+               ","+usr.getEsActivo()+
+               ")";
         try {
-            con=cn.getConnection();
+            con=cn.getConexionMysql();
             ps=con.prepareStatement(sql);
             ps.executeUpdate();
         } catch (Exception e) {
@@ -106,11 +106,11 @@ public class UsuarioDAO implements CRUD{
     @Override
     public boolean edit(Usuario usr) {
         String sql="update usr_ususarios set "
-                + "usr_es_admin='"+usr.getEsAdmin()+"'"
-                + ",usr_activo='"+usr.getEsActivo()+"'"
+                + "usr_es_admin="+usr.getEsAdmin()+""
+                + ",usr_activo="+usr.getEsActivo()+" "
                 + "where usr_id="+usr.getId();
         try {
-            con=cn.getConnection();
+            con=cn.getConexionMysql();
             ps=con.prepareStatement(sql);
             ps.executeUpdate();
         } catch (Exception e) {
@@ -122,7 +122,7 @@ public class UsuarioDAO implements CRUD{
     public boolean eliminar(int id) {
         String sql="delete from usr_ususarios where usr_id="+id;
         try {
-            con=cn.getConnection();
+            con=cn.getConexionMysql();
             ps=con.prepareStatement(sql);
             ps.executeUpdate();
         } catch (Exception e) {
