@@ -14,30 +14,29 @@
     <body>
         <header>
             <nav class="navigation">
-            <%
-                Boolean esAdmin = false;
-                String mail = (String) request.getAttribute("txtEmail");
-                String admin = (String) request.getAttribute("txtAdmin");
-                if ("Administrador".equals(admin)) {
-                    esAdmin = true;
-            %>
-                <a href="controlador?accion=listar">Usuarios</a>
-                <a href="#">Arrendantes</a>
-                <a href="#">Viviendas</a>
-                <a href="#">Alquiler</a>
-                <a href="#">Amenidades</a>
-            <%
-                }
-            %>
-            
+                <%
+                    //HttpSession session = request.getSession(false); // Obtener la sesión existente
+                    String email = (session != null) ? (String) session.getAttribute("txtEmail") : null;
+                    String admin = (session != null) ? (String) session.getAttribute("txtAdmin") : null;
+
+                    // Mostrar enlaces de navegación según el rol de usuario
+                    if ("Administrador".equals(admin)) {
+                %>
+                    <a href="controlador?accion=listar">Usuarios</a>
+                    <a href="#">Arrendantes</a>
+                    <a href="#">Viviendas</a>
+                    <a href="#">Alquiler</a>
+                    <a href="#">Amenidades</a>
+                <%
+                    }
+                %>
+                <a href="home.jsp" style="font-weight: bold; color: red;  padding: 5px; border-radius: 5px;">Inicio</a>
                 <a href="#">Mi Vivienda</a>
                 <a href="#">Reservar</a>
-                <a href="#">Estado de Cuenta (<%= mail %>)</a>
+                <a href="#">Estado de Cuenta (<%= email != null ? email : "invitado" %>)</a>
                 <a href="index.jsp">Salir</a>
             </nav>
-                <input type="hidden" name="txtMail" value="<%= mail %>">
-                <input type="hidden" name="txtAdmin" value="<%= esAdmin %>">
-            
         </header>
+
     </body>
 </html>

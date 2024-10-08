@@ -105,15 +105,19 @@ public class UsuarioDAO implements CRUD{
 
     @Override
     public boolean edit(Usuario usr) {
-        String sql="update usr_ususarios set "
-                + "usr_es_admin="+usr.getEsAdmin()+""
-                + ",usr_activo="+usr.getEsActivo()+" "
-                + "where usr_id="+usr.getId();
+        String sql = "UPDATE usr_ususarios SET usr_contraseña = ?, usr_es_admin = ?, usr_activo = ? WHERE usr_id = ?";
         try {
-            con=cn.getConexionMysql();
-            ps=con.prepareStatement(sql);
+            con = cn.getConexionMysql();
+            ps = con.prepareStatement(sql);
+
+            ps.setString(1, usr.getContrasenia()); // Establecer la contraseña
+            ps.setBoolean(2, usr.getEsAdmin());    // Establecer si es admin
+            ps.setBoolean(3, usr.getEsActivo());   // Establecer si está activo
+            ps.setInt(4, usr.getId());             // Establecer el ID del usuario
+
             ps.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            // Manejo de excepciones
         }
         return false;
     }

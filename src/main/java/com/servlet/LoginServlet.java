@@ -13,6 +13,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet for handling user login.
@@ -51,19 +52,25 @@ public class LoginServlet extends HttpServlet {
                 pst.setString(2, password);
 
                 try (ResultSet rs = pst.executeQuery()) {
-                    if (rs.next()) {
-                        boolean isAdmin = rs.getBoolean("usr_es_admin");
-                        // Establecemos los atributos para el header
-                        request.setAttribute("txtEmail", email);
-                        request.setAttribute("txtAdmin", isAdmin ? "Administrador" : "");
-                        
-                        // Redirigimos a home.jsp
-                        RequestDispatcher dispatcher = request.getRequestDispatcher("/home.jsp");
-                        dispatcher.forward(request, response);
-                    } else {
-                        request.getRequestDispatcher("/error.jsp").forward(request, response);
-                    }
+                if (rs.next()) {
+                    HttpSession session = request.getSession();
+                    boolean isAdmin = rs.getBoolean("usr_es_admin");
+
+                    // Establecemos los atributos para el header como String
+                    request.setAttribute("txtEmail", email);
+                    request.setAttribute("txtAdmin", isAdmin ? "Administrador" : ""); // Cambiado a String
+
+                    // Guardar datos en la sesión como String
+                    session.setAttribute("txtEmail", email);
+                    session.setAttribute("txtAdmin", isAdmin ? "Administrador" : ""); // Cambiado a String
+
+                    // Redirigimos a home.jsp
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/home.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    request.getRequestDispatcher("/error.jsp").forward(request, response);
                 }
+            }
             }
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, "SQL error occurred:", ex);

@@ -31,8 +31,8 @@
                         <th class="text-center">PASS</th>
                         <th class="text-center">ADMINISTRADOR</th>
                         <th class="text-center">ACTIVO</th>
-                        <th class="text-center">Editar</th>
-                        <th class="text-center">Eliminar</th>
+                        <th class="text-center">EDITAR</th>
+                        <th class="text-center">ELIMINAR</th>
                     </tr>
                 </thead>
                 <%
@@ -47,16 +47,23 @@
 
                 <tbody>
                     <tr>
-                        <td class="text-center"><%= usr.getId()%></td>
-                        <td class="text-center"><%= usr.getMail()%></td>
-                        <td class="text-center"><%= usr.getContrasenia()%></td>
-                        <td class="text-center"><%= usr.getEsAdmin()%></td>
-                        <td class="text-center"><%= usr.getEsActivo()%></td>
+                        <td class="text-center"><%= usr.getId() %></td>
+                        <td class="text-center"><%= usr.getMail() %></td>
+                        <td class="text-center" value = "<%= usr.getContrasenia() %>"><%= "*".repeat(usr.getContrasenia().length()) %></td>
+                        <!--<td class="text-center" type = "hidden"><%= usr.getContrasenia() %></td>-->
                         <td class="text-center">
-                            <a class="btn btn-warning" href="controlador?accion=editar&id=<%= usr.getId()%>">Editar</a>
+                            <input class="form-check-input" type="checkbox" name="chkAdmin" id="chkAdmin" 
+                                   value="true" <% if (usr.getEsAdmin()) { %> checked disabled <% } else { %> disabled <% } %> />
                         </td>
-                         <td class="text-center">
-                            <a class="btn btn-danger" href="controlador?accion=eliminar&id=<%= usr.getId()%>">Eliminar</a>
+                        <td class="text-center">
+                            <input class="form-check-input" type="checkbox" name="chkActivo" id="chkActivo" 
+                                   value="true" <% if (usr.getEsActivo()) { %> checked disabled <% } else { %> disabled <% } %> />
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-warning" href="controlador?accion=editar&id=<%= usr.getId() %>">Editar</a>
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-danger" href="controlador?accion=eliminar&id=<%= usr.getId() %>">Eliminar</a>
                         </td>                       
                     </tr>
                     <%}%>

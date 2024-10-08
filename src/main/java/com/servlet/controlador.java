@@ -94,7 +94,7 @@ public class controlador extends HttpServlet {
             Boolean esActivo = (activo != null && activo.equals("true"));
             p.setId(id);
 //            p.setMail(mail);
-//            p.setContrasenia(contrasenia);
+            p.setContrasenia(contrasenia);
             p.setEsAdmin(esAdmin);
             p.setEsActivo(esActivo);
             dao.edit(p);
