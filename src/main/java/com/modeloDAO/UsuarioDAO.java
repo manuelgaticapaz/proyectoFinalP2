@@ -82,6 +82,7 @@ public class UsuarioDAO implements CRUD{
                 usr.setEsActivo(rs.getBoolean("usr_activo"));
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return usr;
     }
@@ -99,6 +100,7 @@ public class UsuarioDAO implements CRUD{
             ps=con.prepareStatement(sql);
             ps.executeUpdate();
         } catch (Exception e) {
+            e.printStackTrace();
         }
        return false;
     }
@@ -118,6 +120,7 @@ public class UsuarioDAO implements CRUD{
             ps.executeUpdate();
         } catch (SQLException e) {
             // Manejo de excepciones
+            e.printStackTrace();
         }
         return false;
     }
@@ -130,6 +133,7 @@ public class UsuarioDAO implements CRUD{
             ps=con.prepareStatement(sql);
             ps.executeUpdate();
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }
