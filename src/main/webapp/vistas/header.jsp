@@ -23,10 +23,10 @@
                     if ("Administrador".equals(admin)) {
                 %>
                     <a href="controlador?accion=listar">Usuarios</a>
-                    <a href="#">Arrendantes</a>
-                    <a href="#">Viviendas</a>
-                    <a href="#">Alquiler</a>
-                    <a href="#">Amenidades</a>
+                    <a href="controladorResidente?accion=listar">Residentes</a>
+                    <a href="controladorVivienda?accion=listar">Viviendas</a>
+                    <a href="controladorAlquiler?accion=listar">Alquiler</a>
+                    <a href="controladorAreasComunes?accion=listar">Amenidades</a>
                 <%
                     }
                 %>

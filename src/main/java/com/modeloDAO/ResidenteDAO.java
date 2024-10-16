@@ -61,7 +61,7 @@ public class ResidenteDAO implements CRUDResidente {
 
     @Override
     public boolean add(Residente r) {
-        String sql = "INSERT INTO residente (documento, nombre, edad, correo, claveAcceso) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO residente (documento, nombre, edad, correo, claveAcceso) VALUES (?, ?, ?, ?, 1)";
         try {
             con = cn.getConexionMysql();
             ps = con.prepareStatement(sql);
@@ -69,7 +69,6 @@ public class ResidenteDAO implements CRUDResidente {
             ps.setString(2, r.getNombre());
             ps.setInt(3, r.getEdad());
             ps.setString(4, r.getCorreo());
-            ps.setString(5, r.getClaveAcceso());
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -80,22 +79,22 @@ public class ResidenteDAO implements CRUDResidente {
 
     @Override
     public boolean edit(Residente r) {
-        String sql = "UPDATE residente SET nombre=?, edad=?, correo=?, claveAcceso=? WHERE documento=?";
+        String sql = "UPDATE residente SET nombre=?, edad=?, correo=? WHERE documento=?";
         try {
             con = cn.getConexionMysql();
             ps = con.prepareStatement(sql);
             ps.setString(1, r.getNombre());
             ps.setInt(2, r.getEdad());
             ps.setString(3, r.getCorreo());
-            ps.setString(4, r.getClaveAcceso());
-            ps.setString(5, r.getDocumento());
-            ps.executeUpdate();
-            return true;
+            ps.setString(4, r.getDocumento());
+            int rowsUpdated = ps.executeUpdate(); // Devuelve cuántas filas fueron actualizadas
+            return rowsUpdated > 0;  // Si al menos una fila fue actualizada, retorna true
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
+
 
     @Override
     public boolean eliminar(String documento) {

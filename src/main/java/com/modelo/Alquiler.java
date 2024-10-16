@@ -60,4 +60,5 @@ public class Alquiler {
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
+
 }

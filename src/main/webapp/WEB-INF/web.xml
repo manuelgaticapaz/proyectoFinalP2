@@ -8,6 +8,22 @@
         <servlet-name>controlador</servlet-name>
         <servlet-class>com.servlet.controlador</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>controladorResidente</servlet-name>
+        <servlet-class>com.servlet.controladorResidente</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>controladorAreasComunes</servlet-name>
+        <servlet-class>com.servlet.controladorAreasComunes</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>controladorVivienda</servlet-name>
+        <servlet-class>com.servlet.controladorVivienda</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>controladorAlquiler</servlet-name>
+        <servlet-class>com.servlet.controladorAlquiler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -15,6 +31,22 @@
     <servlet-mapping>
         <servlet-name>controlador</servlet-name>
         <url-pattern>/controlador</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controladorResidente</servlet-name>
+        <url-pattern>/controladorResidente</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controladorAreasComunes</servlet-name>
+        <url-pattern>/controladorAreasComunes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controladorVivienda</servlet-name>
+        <url-pattern>/controladorVivienda</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controladorAlquiler</servlet-name>
+        <url-pattern>/controladorAlquiler</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -14,6 +14,22 @@ public class AlquilerDAO implements CRUDAlquiler {
     ResultSet rs;
     conexionDB cn = new conexionDB();
     
+    public boolean validarDisponibilidad(int idVivienda, Date fechaInicio, Date fechaFin) {
+        String sql = "SELECT * FROM alquiler WHERE id_vivienda = ? AND (fecha_fin IS NULL OR (fecha_inicio <= ? AND (fecha_fin >= ? OR fecha_fin IS NULL)))";
+        try {
+            con = cn.getConexionMysql();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idVivienda);
+            ps.setDate(2, fechaFin != null ? fechaFin : fechaInicio);  // Si no hay fecha fin, usamos la fecha de inicio
+            ps.setDate(3, fechaInicio);
+            rs = ps.executeQuery();
+            return !rs.next(); // Si no hay resultados, la vivienda está disponible
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
     @Override
     public List<Alquiler> listar() {
         String sql = "SELECT * FROM alquiler";
@@ -76,7 +92,11 @@ public class AlquilerDAO implements CRUDAlquiler {
             ps.setInt(1, a.getIdVivienda());
             ps.setString(2, a.getDocumentoResidente());
             ps.setDate(3, new java.sql.Date(a.getFechaInicio().getTime()));
-            ps.setDate(4, a.getFechaFin() != null ? new java.sql.Date(a.getFechaFin().getTime()) : null);
+            if (a.getFechaFin() != null) {
+                ps.setDate(4, new java.sql.Date(a.getFechaFin().getTime()));
+            } else {
+                ps.setNull(4, java.sql.Types.DATE); // Si no hay fecha fin, establecemos NULL
+            }
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
