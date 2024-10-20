@@ -47,6 +47,7 @@ public class controladorVivienda extends HttpServlet {
             id = Integer.parseInt(request.getParameter("id"));
             request.setAttribute("idVivienda", id);
             acceso = edit;
+
         } else if (action.equalsIgnoreCase("Actualizar")) {
             id = Integer.parseInt(request.getParameter("id"));
             String direccion = request.getParameter("txtDireccion");

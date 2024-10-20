@@ -57,6 +57,7 @@
 
                         <td class="text-center">
                             <a class="btn btn-warning" href="controladorVivienda?accion=editar&id=<%= vivienda.getId() %>">Editar</a>
+
                         </td>
                         <td class="text-center">
                             <a class="btn btn-danger" href="controladorVivienda?accion=eliminar&id=<%= vivienda.getId() %>">Eliminar</a>

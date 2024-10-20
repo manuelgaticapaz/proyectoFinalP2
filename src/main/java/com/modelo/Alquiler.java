@@ -3,11 +3,14 @@ package com.modelo;
 import java.util.Date;
 
 public class Alquiler {
+
+
     private int id;
     private int idVivienda;
     private String documentoResidente;
     private Date fechaInicio;
     private Date fechaFin;
+    
 
     public Alquiler() {
     }

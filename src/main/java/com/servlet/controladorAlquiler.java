@@ -4,14 +4,11 @@ import com.modelo.Alquiler;
 import com.modeloDAO.AlquilerDAO;
 import java.io.IOException;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 public class controladorAlquiler extends HttpServlet {
 
@@ -51,16 +48,21 @@ public class controladorAlquiler extends HttpServlet {
             acceso = edit;
         } else if (action.equalsIgnoreCase("Actualizar")) {
             id = Integer.parseInt(request.getParameter("id"));
-            int idVivienda = Integer.parseInt(request.getParameter("txtIdVivienda"));
-            String documentoResidente = request.getParameter("txtDocumentoResidente");
+            
+            // Recuperar los valores del formulario para los campos de vivienda y residente
+            int idVivienda = Integer.parseInt(request.getParameter("idVivienda"));
+            String documentoResidente = request.getParameter("documentoResidente");
             Date fechaInicio = Date.valueOf(request.getParameter("txtFechaInicio"));
             Date fechaFin = request.getParameter("txtFechaFin").isEmpty() ? null : Date.valueOf(request.getParameter("txtFechaFin"));
 
+            // Establecer los valores en el objeto alquiler
             alquiler.setId(id);
             alquiler.setIdVivienda(idVivienda);
             alquiler.setDocumentoResidente(documentoResidente);
             alquiler.setFechaInicio(fechaInicio);
             alquiler.setFechaFin(fechaFin);
+            
+            // Llamar a la función de actualización
             dao.edit(alquiler);
 
             acceso = listar;
@@ -70,6 +72,7 @@ public class controladorAlquiler extends HttpServlet {
             acceso = listar;
         }
 
+        // Redirigir a la vista correspondiente
         RequestDispatcher vista = request.getRequestDispatcher(acceso);
         vista.forward(request, response);
     }
