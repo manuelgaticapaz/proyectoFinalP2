@@ -56,24 +56,32 @@ public class LoginServlet extends HttpServlet {
                     pst.setString(2, password);
 
                     try (ResultSet rs = pst.executeQuery()) {
-                    if (rs.next()) {
-                        HttpSession session = request.getSession();
-                        boolean isAdmin = rs.getBoolean("usr_es_admin");
+                        if (rs.next()) {
+                            HttpSession session = request.getSession();
+                            boolean isAdmin = rs.getBoolean("usr_es_admin");
+                            int idAlquiler = rs.getInt("id");
+                            int idVivienda = rs.getInt("id_vivienda");
+                            String documentoStr = rs.getString("documento");  // Recuperar como String
+                            long idResidente = Long.parseLong(documentoStr);  // Convertir a Long
 
-                        // Establecemos los atributos para el header como String
-                        request.setAttribute("txtEmail", email);
-                        request.setAttribute("txtAdmin", isAdmin ? "Administrador" : ""); // Cambiado a String
+                            // Establecer los atributos para el header como String
+                            request.setAttribute("txtEmail", email);
+                            request.setAttribute("txtAdmin", isAdmin ? "Administrador" : "");
 
-                        // Guardar datos en la sesión como String
-                        session.setAttribute("txtEmail", email);
-                        session.setAttribute("txtAdmin", isAdmin ? "Administrador" : ""); // Cambiado a String
+                            // Guardar datos en la sesión con el tipo correcto
+                            session.setAttribute("txtEmail", email);
+                            session.setAttribute("txtAdmin", isAdmin ? "Administrador" : "Usuario");
+                            session.setAttribute("txtIdAlquiler", idAlquiler);  // Almacenado como int
+                            session.setAttribute("txtIdVivienda", idVivienda);  // Almacenado como int
+                            session.setAttribute("txtIdResidente", idResidente);  // Almacenado como long
 
-                        // Redirigimos a home.jsp
-                        RequestDispatcher dispatcher = request.getRequestDispatcher("/home.jsp");
-                        dispatcher.forward(request, response);
-                    } else {
-                        request.getRequestDispatcher("/error.jsp").forward(request, response);
-                    }
+                            // Redirigir a home.jsp
+                            RequestDispatcher dispatcher = request.getRequestDispatcher("/home.jsp");
+                            dispatcher.forward(request, response);
+
+                        } else {
+                            request.getRequestDispatcher("/error.jsp").forward(request, response);
+                        }
                     }
             }
         } catch (SQLException ex) {

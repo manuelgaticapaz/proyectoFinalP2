@@ -24,6 +24,10 @@
         <servlet-name>controladorAlquiler</servlet-name>
         <servlet-class>com.servlet.controladorAlquiler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>controladorConsultaDatos</servlet-name>
+        <servlet-class>com.servlet.controladorConsultaDatos</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>controladorAlquiler</servlet-name>
         <url-pattern>/controladorAlquiler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controladorConsultaDatos</servlet-name>
+        <url-pattern>/controladorConsultaDatos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
