@@ -27,7 +27,7 @@
                 <p><strong>Dirección:</strong> ${direccion}</p>
                 <p><strong>Tipo de Vivienda:</strong> ${tipoVivienda}</p>
                 <p><strong>Número de Habitaciones:</strong> ${numHabitaciones}</p>
-                <p><strong>Precio:</strong> $${precio}</p>
+                <p><strong>Precio:</strong> Q.${precio}</p>
         </div>
     </body> 
 </html>

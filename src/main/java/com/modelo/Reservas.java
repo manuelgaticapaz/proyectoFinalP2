@@ -4,27 +4,30 @@ import java.util.Date;
 
 public class Reservas {
 
-    public Reservas(int id, int idArea, String documentoResidente, Date fechaReserva, int cantidadPersonas, String nombreResponsable, String comentario) {
+    private int id;
+    private int idArea;
+    private int idAlquiler;
+    private Date fechaReservaInicio;
+    private Date fechaReservaFinal;
+    private String nombreResponsable;
+    private String comentario;
+
+    // Constructor vacío
+    public Reservas() {
+    }
+
+    // Constructor con parámetros
+    public Reservas(int id, int idArea, int idAlquiler, Date fechaReservaInicio, Date fechaReservaFinal, String nombreResponsable, String comentario) {
         this.id = id;
         this.idArea = idArea;
-        this.documentoResidente = documentoResidente;
-        this.fechaReserva = fechaReserva;
-        this.cantidadPersonas = cantidadPersonas;
+        this.idAlquiler = idAlquiler;
+        this.fechaReservaInicio = fechaReservaInicio;
+        this.fechaReservaFinal = fechaReservaFinal;
         this.nombreResponsable = nombreResponsable;
         this.comentario = comentario;
     }
 
-    public Reservas() {
-    }
-    private int id;
-    private int idArea;
-    private String documentoResidente;
-    private Date fechaReserva;
-    private int cantidadPersonas;
-    private String nombreResponsable;
-    private String comentario;
-
-    // Getters and Setters
+    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -41,28 +44,28 @@ public class Reservas {
         this.idArea = idArea;
     }
 
-    public String getDocumentoResidente() {
-        return documentoResidente;
+    public int getIdAlquiler() {
+        return idAlquiler;
     }
 
-    public void setDocumentoResidente(String documentoResidente) {
-        this.documentoResidente = documentoResidente;
+    public void setIdAlquiler(int idAlquiler) {
+        this.idAlquiler = idAlquiler;
     }
 
-    public Date getFechaReserva() {
-        return fechaReserva;
+    public Date getFechaReservaInicio() {
+        return fechaReservaInicio;
     }
 
-    public void setFechaReserva(Date fechaReserva) {
-        this.fechaReserva = fechaReserva;
+    public void setFechaReservaInicio(Date fechaReservaInicio) {
+        this.fechaReservaInicio = fechaReservaInicio;
     }
 
-    public int getCantidadPersonas() {
-        return cantidadPersonas;
+    public Date getFechaReservaFinal() {
+        return fechaReservaFinal;
     }
 
-    public void setCantidadPersonas(int cantidadPersonas) {
-        this.cantidadPersonas = cantidadPersonas;
+    public void setFechaReservaFinal(Date fechaReservaFinal) {
+        this.fechaReservaFinal = fechaReservaFinal;
     }
 
     public String getNombreResponsable() {

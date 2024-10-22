@@ -1,8 +1,3 @@
-<%-- 
-    Document   : listarAlquiler
-    Created on : 15/10/2024, 10:39:51 p. m.
-    Author     : Marcos Gatica Paz
---%>
 
 <%@page import="java.util.Iterator"%>
 <%@page import="com.modelo.Alquiler"%>

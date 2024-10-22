@@ -2,6 +2,7 @@ package com.modeloDAO;
 
 import com.conexion.conexionDB;
 import com.interfaces.CRUDReservas;
+import com.modelo.AreasComunes;
 import com.modelo.Reservas;
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class ReservasDAO implements CRUDReservas {
     
     @Override
     public List<Reservas> listar() {
-        String sql = "SELECT * FROM reservas";
+        String sql = "SELECT * FROM reservas order by id desc";
         List<Reservas> lista = new ArrayList<>();
         try {
             con = cn.getConexionMysql();
@@ -26,9 +27,9 @@ public class ReservasDAO implements CRUDReservas {
                 Reservas r = new Reservas();
                 r.setId(rs.getInt("id"));
                 r.setIdArea(rs.getInt("id_area"));
-                r.setDocumentoResidente(rs.getString("documento_residente"));
-                r.setFechaReserva(rs.getDate("fecha_reserva"));
-                r.setCantidadPersonas(rs.getInt("cantidad_personas"));
+                r.setIdAlquiler(rs.getInt("id_alquiler"));
+                r.setFechaReservaInicio(rs.getTimestamp("fecha_reserva_inicio"));
+                r.setFechaReservaFinal(rs.getTimestamp("fecha_reserva_final"));
                 r.setNombreResponsable(rs.getString("nombre_responsable"));
                 r.setComentario(rs.getString("comentario"));
                 lista.add(r);
@@ -41,7 +42,7 @@ public class ReservasDAO implements CRUDReservas {
     
     @Override
     public Reservas list(int id) {
-        String sql = "SELECT * FROM reservas WHERE id = ?";
+        String sql = "SELECT * FROM reservas WHERE id = ? order by id desc";
         Reservas r = new Reservas();
         try {
             con = cn.getConexionMysql();
@@ -51,9 +52,9 @@ public class ReservasDAO implements CRUDReservas {
             while (rs.next()) {
                 r.setId(rs.getInt("id"));
                 r.setIdArea(rs.getInt("id_area"));
-                r.setDocumentoResidente(rs.getString("documento_residente"));
-                r.setFechaReserva(rs.getDate("fecha_reserva"));
-                r.setCantidadPersonas(rs.getInt("cantidad_personas"));
+                r.setIdAlquiler(rs.getInt("id_alquiler"));
+                r.setFechaReservaInicio(rs.getTimestamp("fecha_reserva_inicio"));
+                r.setFechaReservaFinal(rs.getTimestamp("fecha_reserva_final"));
                 r.setNombreResponsable(rs.getString("nombre_responsable"));
                 r.setComentario(rs.getString("comentario"));
             }
@@ -65,14 +66,14 @@ public class ReservasDAO implements CRUDReservas {
 
     @Override
     public boolean add(Reservas r) {
-        String sql = "INSERT INTO reservas (id_area, documento_residente, fecha_reserva, cantidad_personas, nombre_responsable, comentario) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO reservas (id_area, id_alquiler, fecha_reserva_inicio, fecha_reserva_final, nombre_responsable, comentario) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             con = cn.getConexionMysql();
             ps = con.prepareStatement(sql);
             ps.setInt(1, r.getIdArea());
-            ps.setString(2, r.getDocumentoResidente());
-            ps.setDate(3, new java.sql.Date(r.getFechaReserva().getTime()));
-            ps.setInt(4, r.getCantidadPersonas());
+            ps.setInt(2, r.getIdAlquiler());
+            ps.setTimestamp(3, new Timestamp(r.getFechaReservaInicio().getTime()));
+            ps.setTimestamp(4, new Timestamp(r.getFechaReservaFinal().getTime()));
             ps.setString(5, r.getNombreResponsable());
             ps.setString(6, r.getComentario());
             ps.executeUpdate();
@@ -85,14 +86,14 @@ public class ReservasDAO implements CRUDReservas {
     
     @Override
     public boolean edit(Reservas r) {
-        String sql = "UPDATE reservas SET id_area=?, documento_residente=?, fecha_reserva=?, cantidad_personas=?, nombre_responsable=?, comentario=? WHERE id=?";
+        String sql = "UPDATE reservas SET id_area=?, id_alquiler=?, fecha_reserva_inicio=?, fecha_reserva_final=?, nombre_responsable=?, comentario=? WHERE id=?";
         try {
             con = cn.getConexionMysql();
             ps = con.prepareStatement(sql);
             ps.setInt(1, r.getIdArea());
-            ps.setString(2, r.getDocumentoResidente());
-            ps.setDate(3, new java.sql.Date(r.getFechaReserva().getTime()));
-            ps.setInt(4, r.getCantidadPersonas());
+            ps.setInt(2, r.getIdAlquiler());
+            ps.setTimestamp(3, new Timestamp(r.getFechaReservaInicio().getTime()));
+            ps.setTimestamp(4, new Timestamp(r.getFechaReservaFinal().getTime()));
             ps.setString(5, r.getNombreResponsable());
             ps.setString(6, r.getComentario());
             ps.setInt(7, r.getId());
@@ -117,5 +118,65 @@ public class ReservasDAO implements CRUDReservas {
             e.printStackTrace();
         }
         return false;
+    }
+
+    // Nuevo método: Listar reservas por ID de Alquiler
+    public List<Reservas> listarPorAlquiler(int idAlquiler) {
+        String sql = "SELECT * FROM reservas WHERE id_alquiler = ? order by id desc";
+        List<Reservas> lista = new ArrayList<>();
+        try {
+            con = cn.getConexionMysql();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idAlquiler);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Reservas r = new Reservas();
+                r.setId(rs.getInt("id"));
+                r.setIdArea(rs.getInt("id_area"));
+                r.setIdAlquiler(rs.getInt("id_alquiler"));
+                r.setFechaReservaInicio(rs.getTimestamp("fecha_reserva_inicio"));
+                r.setFechaReservaFinal(rs.getTimestamp("fecha_reserva_final"));
+                r.setNombreResponsable(rs.getString("nombre_responsable"));
+                r.setComentario(rs.getString("comentario"));
+                lista.add(r);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+    
+    public List<AreasComunes> obtenerAreasDisponibles(Timestamp fechaInicio, Timestamp fechaFin) {
+        List<AreasComunes> areasDisponibles = new ArrayList<>();
+        String sql = "SELECT * FROM areascomunes WHERE id NOT IN "
+                   + "(SELECT id_area FROM reservas WHERE "
+                   + "(fecha_reserva_inicio < ? AND fecha_reserva_final > ?) "
+                   + "OR (fecha_reserva_inicio < ? AND fecha_reserva_final > ?))";
+        try {
+            con = cn.getConexionMysql();
+            ps = con.prepareStatement(sql);
+            // Establecemos los valores para evitar solapamientos de fechas
+            ps.setTimestamp(1, fechaFin);   // La reserva debe terminar antes de la nueva reserva
+            ps.setTimestamp(2, fechaInicio); // La reserva debe comenzar después de la nueva reserva
+            ps.setTimestamp(3, fechaFin);   // Verificamos las mismas condiciones para evitar solapamientos
+            ps.setTimestamp(4, fechaInicio);
+            
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                // Crear objeto área con los datos recuperados
+                AreasComunes area = new AreasComunes();
+                area.setId(rs.getInt("id"));
+                area.setCodigo(rs.getString("codigo"));
+                area.setTipo(rs.getString("tipo"));
+                area.setUbicacion(rs.getString("ubicacion"));
+                area.setCapacidad(rs.getInt("capacidad"));
+                area.setEstado(rs.getString("estado"));
+                areasDisponibles.add(area);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return areasDisponibles;
     }
 }

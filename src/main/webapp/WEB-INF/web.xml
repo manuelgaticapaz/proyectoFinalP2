@@ -28,6 +28,10 @@
         <servlet-name>controladorConsultaDatos</servlet-name>
         <servlet-class>com.servlet.controladorConsultaDatos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>controladorReservas</servlet-name>
+        <servlet-class>com.servlet.controladorReservas</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>controladorConsultaDatos</servlet-name>
         <url-pattern>/controladorConsultaDatos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controladorReservas</servlet-name>
+        <url-pattern>/controladorReservas</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

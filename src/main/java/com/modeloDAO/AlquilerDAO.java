@@ -138,4 +138,67 @@ public class AlquilerDAO implements CRUDAlquiler {
         }
         return false;
     }
+    
+    // Método para obtener una lista de viviendas sin reserva activa o recién registradas (sin alquiler)
+    public List<Integer> obtenerViviendasDisponiblesORecientes() {
+        String sql = "SELECT DISTINCT viv.id FROM vivienda as viv " +
+                     "LEFT JOIN alquiler as alq ON alq.id_vivienda = viv.id " +
+                     "WHERE viv.disponibilidad = true AND (alq.fecha_fin IS NOT NULL OR alq.id IS NULL)";
+
+        List<Integer> viviendasDisponiblesORecientes = new ArrayList<>();
+        try {
+            con = cn.getConexionMysql();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                viviendasDisponiblesORecientes.add(rs.getInt("id"));  // Corregido "id_vivienda" a "id"
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return viviendasDisponiblesORecientes;
+    }
+
+    
+    // Método para obtener una lista de residentes con alquiler activo
+    public List<String> obtenerAlquileresActivos() {
+        List<String> residentesConAlquilerActivo = new ArrayList<>();
+        String sql = "SELECT id, documento_residente FROM alquiler WHERE fecha_fin IS NULL";
+
+        try {
+            con = cn.getConexionMysql();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            // Iteramos sobre los resultados y concatenamos el id y el documento_residente
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String documentoResidente = rs.getString("documento_residente");
+                // Concatenamos el id y el documento_residente separados por un guion
+                residentesConAlquilerActivo.add(id + "-" + documentoResidente);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return residentesConAlquilerActivo;
+    }
+
+
+
+
 }

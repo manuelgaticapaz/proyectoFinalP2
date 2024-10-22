@@ -32,7 +32,7 @@
                 %>
                 <a href="home.jsp" style="font-weight: bold; color: red;  padding: 5px; border-radius: 5px;">Inicio</a>
                 <a href="controladorConsultaDatos">Mi Perfil</a>
-                <a href="#">Reservar</a>
+                <a href="controladorReservas?accion=listar">Reservar</a>
                 <a href="#">Estado de Cuenta (<%= email != null ? email : "invitado" %>)</a>
                 <a href="index.jsp">Salir</a>
             </nav>

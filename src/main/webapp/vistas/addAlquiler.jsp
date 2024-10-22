@@ -1,9 +1,5 @@
-<%-- 
-    Document   : addAlquiler
-    Created on : 15/10/2024, 10:47:03 p. m.
-    Author     : Marcos Gatica Paz
---%>
 
+<%@page import="com.modeloDAO.AlquilerDAO"%>
 <%@page import="com.modelo.Residente"%>
 <%@page import="com.modelo.Residente"%>
 <%@page import="com.modeloDAO.ResidenteDAO"%>
@@ -38,11 +34,21 @@
                         <option value="">Seleccione una vivienda</option>
                         <%
                             ViviendaDAO viviendaDAO = new ViviendaDAO();
+                            AlquilerDAO alquilerDAO = new AlquilerDAO();
+
+                            // Obtener lista de viviendas disponibles o recién registradas
+                            List<Integer> viviendasDisponiblesORecientes = alquilerDAO.obtenerViviendasDisponiblesORecientes();
+
+                            // Obtener todas las viviendas
                             List<Vivienda> viviendas = viviendaDAO.listar();
+
+                            // Filtrar y mostrar solo las viviendas disponibles o recién registradas
                             for (Vivienda vivienda : viviendas) {
-                                if (vivienda.isDisponibilidad()) {
+                                if (vivienda.isDisponibilidad() && viviendasDisponiblesORecientes.contains(vivienda.getId())) {
                         %>
-                        <option value="<%= vivienda.getId() %>"><%= vivienda.getDireccion() %> (ID: <%= vivienda.getId() %>)</option>
+                                    <option value="<%= vivienda.getId() %>">
+                                        <%= vivienda.getDireccion() %> (ID: <%= vivienda.getId() %>)
+                                    </option>
                         <%
                                 }
                             }
@@ -55,11 +61,23 @@
                         <option value="">Seleccione un residente</option>
                         <%
                             ResidenteDAO residenteDAO = new ResidenteDAO();
+                            AlquilerDAO resalquilerDAO = new AlquilerDAO();
+
+                            // Obtener lista de residentes con alquiler activo
+                            List<String> residentesConAlquilerActivo = alquilerDAO.obtenerAlquileresActivos();
+
+                            // Obtener todos los residentes
                             List<Residente> residentes = residenteDAO.listar();
+
+                            // Filtrar y mostrar solo los residentes sin alquiler activo
                             for (Residente residente : residentes) {
+                                if (!residentesConAlquilerActivo.contains(residente.getDocumento())) {
                         %>
-                        <option value="<%= residente.getDocumento() %>"><%= residente.getNombre() %> (Documento: <%= residente.getDocumento() %>)</option>
+                                    <option value="<%= residente.getDocumento() %>">
+                                        <%= residente.getNombre() %> (Documento: <%= residente.getDocumento() %>)
+                                    </option>
                         <%
+                                }
                             }
                         %>
                     </select><br>
